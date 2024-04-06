@@ -90,12 +90,18 @@ class _AudioAppScreenState extends State<AudioAppScreen> {
                       audioPlayer.stop();
 
                     } else {
-                      audioPlayer.setAsset(items[index].audioPath);
-                      audioPlayer.play();
 
-                      setState(() {
-                        playingIndex = index;
-                      });
+
+                      try {
+                        audioPlayer.setAsset(items[index].audioPath);
+                        audioPlayer.play();
+
+                        setState(() {
+                          playingIndex = index;
+                        });
+                      } catch (error) {
+                        print(error);
+                      }
 
                     }
 
