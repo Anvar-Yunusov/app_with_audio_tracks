@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import '../models/item_model.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AudioAppScreen extends StatefulWidget {
 
@@ -42,6 +43,19 @@ class _AudioAppScreenState extends State<AudioAppScreen> {
 
   int? playingIndex;
 
+  Widget showIcon(int currentIndex){
+
+    if (playingIndex == currentIndex){
+      return FaIcon(FontAwesomeIcons.stop);
+
+    } else {
+
+      return FaIcon(FontAwesomeIcons.play);
+
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,11 +77,29 @@ class _AudioAppScreenState extends State<AudioAppScreen> {
               child: ListTile(
                 title: Text(items[index].name),
                 leading: IconButton(
-                  icon: Icon(Icons.play_arrow),
+                  icon: showIcon(index),
                   onPressed: () {
 
-                    audioPlayer.setAsset(items[index].audioPath);
-                    audioPlayer.play();
+
+                    if (playingIndex == index){
+
+                      setState(() {
+                        playingIndex = null;
+                      });
+
+                      audioPlayer.stop();
+
+                    } else {
+                      audioPlayer.setAsset(items[index].audioPath);
+                      audioPlayer.play();
+
+                      setState(() {
+                        playingIndex = index;
+                      });
+
+                    }
+
+
 
                   },
                 ),
