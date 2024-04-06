@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:just_audio/just_audio.dart';
 import '../models/item_model.dart';
 
 class AudioAppScreen extends StatefulWidget {
@@ -38,6 +38,10 @@ class _AudioAppScreenState extends State<AudioAppScreen> {
     ),
   ];
 
+  final AudioPlayer audioPlayer = AudioPlayer();
+
+  int? playingIndex;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,9 +60,18 @@ class _AudioAppScreenState extends State<AudioAppScreen> {
                 )
               ),
               height: 100,
-              child: ListTile(title: Text(items[index].name),
-              leading: IconButton(icon: Icon(Icons.play_arrow),
-              onPressed: () {},),),
+              child: ListTile(
+                title: Text(items[index].name),
+                leading: IconButton(
+                  icon: Icon(Icons.play_arrow),
+                  onPressed: () {
+
+                    audioPlayer.setAsset(items[index].audioPath);
+                    audioPlayer.play();
+
+                  },
+                ),
+              ),
             ),
           );
         })
